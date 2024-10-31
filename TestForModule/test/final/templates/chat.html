@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="data:,">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智连云途</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            height: 100vh;
+        }
+
+        #left-section {
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        #right-section {
+            position: relative;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            height: 100%;
+            flex-grow: 1; /* 右侧背景占满剩余的宽度 */
+        }
+
+        #right-section h2,
+        #right-section p {
+            z-index: 2;
+            position: relative;
+        }
+
+        #right-section img {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        #chat-container {
+            width: 90%;
+            max-width: 400px;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        #chat-log {
+            flex: 1;
+            padding: 15px;
+            background-color: #e9ecef;
+            overflow-y: auto;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .chat-message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        .chat-message p {
+            margin: 0;
+        }
+
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .assistant-message {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+            color: black;
+        }
+
+        form {
+            display: flex;
+            padding: 10px;
+            background-color: #ffffff;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #right-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        #right-section p {
+            font-size: 18px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- 左侧聊天窗口部分 -->
+    <div id="left-section">
+        <div id="chat-container">
+            <h1>智连云途智能查询</h1>
+
+            <div id="chat-log">
+                <!-- 循环显示对话日志 -->
+                {% for message in conversation_log %}
+                {% if message.role == 'user' %}
+                <div class="chat-message user-message">
+                    <p><strong>我:</strong> {{ message.content }}</p>
+                </div>
+                {% elif message.role == 'assistant' %}
+                <div class="chat-message assistant-message">
+                    <p><strong>智连云途:</strong> {{ message.content }}</p>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+            <form action="/" method="post">
+                <input type="text" name="user_input" placeholder="请输入您的问题..." required>
+                <button type="submit">发送</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 右侧背景部分 -->
+    <div id="right-section" style="text-align: center;">
+        <h2>关于智连云途</h2>
+        <p>智连云途是一个智能的物流入库管理系统，旨在通过NFC芯片识别,自然语言处理等技术，使物流中心能够实现物流入库无人化，减少人力成本。并且用户能够通过与智连云途的对话来获取当前物流的所有信息，同时用户还可以通过手机识别NFC芯片完成智能出库，极大地方便了用户的取快递的体验。</p>
+        <img src="../static/tech_background.png" alt="科技背景">
+    </div>
+
+</body>
+
+</html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>智连云途</title>-->
+<!--    <style>-->
+<!--        * {-->
+<!--            box-sizing: border-box;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            font-family: 'Arial', sans-serif;-->
+<!--        }-->
+
+<!--        body {-->
+<!--            background-color: #f0f2f5;-->
+<!--            display: flex;-->
+<!--            height: 100vh;-->
+<!--        }-->
+
+<!--        #left-section {-->
+<!--            width: 40%;-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            align-items: center;-->
+<!--            background-color: white;-->
+<!--            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+
+<!--       #right-section {-->
+<!--        position: relative;-->
+<!--        padding: 20px;-->
+<!--        color: white; /* 设置文字颜色与背景对比 */-->
+<!--        text-align: center;-->
+<!--        background-color: rgba(0, 0, 0, 0.7); /* 添加透明背景，确保文字可读 */-->
+<!--        height: 100%;-->
+<!--    }-->
+
+<!--        #right-section h2, #right-section p {-->
+<!--        z-index: 2; /* 确保文字在图片上方 */-->
+<!--        position: relative;-->
+<!--    }-->
+
+<!--        #chat-container {-->
+<!--            width: 90%;-->
+<!--            max-width: 400px;-->
+<!--            background-color: white;-->
+<!--            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);-->
+<!--            border-radius: 10px;-->
+<!--            overflow: hidden;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--        }-->
+
+<!--        h1 {-->
+<!--            text-align: center;-->
+<!--            padding: 20px;-->
+<!--            background-color: #007bff;-->
+<!--            color: white;-->
+<!--            margin-bottom: 10px;-->
+<!--        }-->
+
+<!--        #chat-log {-->
+<!--            flex: 1;-->
+<!--            padding: 15px;-->
+<!--            background-color: #e9ecef;-->
+<!--            overflow-y: auto;-->
+<!--            border-bottom: 1px solid #dee2e6;-->
+<!--        }-->
+
+<!--        .chat-message {-->
+<!--            margin-bottom: 10px;-->
+<!--            padding: 10px;-->
+<!--            border-radius: 8px;-->
+<!--            max-width: 80%;-->
+<!--            line-height: 1.5;-->
+<!--        }-->
+
+<!--        .chat-message p {-->
+<!--            margin: 0;-->
+<!--        }-->
+
+<!--        .user-message {-->
+<!--            background-color: #007bff;-->
+<!--            color: white;-->
+<!--            align-self: flex-end;-->
+<!--        }-->
+
+<!--        .assistant-message {-->
+<!--            background-color: #f1f1f1;-->
+<!--            align-self: flex-start;-->
+<!--            color: black;-->
+<!--        }-->
+
+<!--        form {-->
+<!--            display: flex;-->
+<!--            padding: 10px;-->
+<!--            background-color: #ffffff;-->
+<!--        }-->
+
+<!--        input[type="text"] {-->
+<!--            flex: 1;-->
+<!--            padding: 10px;-->
+<!--            font-size: 16px;-->
+<!--            border: 1px solid #dee2e6;-->
+<!--            border-radius: 5px;-->
+<!--            outline: none;-->
+<!--            transition: border-color 0.2s;-->
+<!--        }-->
+
+<!--        input[type="text"]:focus {-->
+<!--            border-color: #007bff;-->
+<!--        }-->
+
+<!--        button {-->
+<!--            padding: 10px 20px;-->
+<!--            background-color: #007bff;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            border-radius: 5px;-->
+<!--            margin-left: 10px;-->
+<!--            cursor: pointer;-->
+<!--            font-size: 16px;-->
+<!--            transition: background-color 0.2s;-->
+<!--        }-->
+
+<!--        button:hover {-->
+<!--            background-color: #0056b3;-->
+<!--        }-->
+
+<!--        #right-section h2 {-->
+<!--            font-size: 36px;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+
+<!--        #right-section p {-->
+<!--            font-size: 18px;-->
+<!--            max-width: 600px;-->
+<!--            line-height: 1.6;-->
+<!--        }-->
+
+<!--    </style>-->
+<!--</head>-->
+
+<!--<body>-->
+
+<!--    &lt;!&ndash; 左侧聊天窗口部分 &ndash;&gt;-->
+<!--    <div id="left-section">-->
+<!--        <div id="chat-container">-->
+<!--            <h1>智连云途智能查询</h1>-->
+
+<!--            <div id="chat-log">-->
+<!--                &lt;!&ndash; 循环显示对话日志 &ndash;&gt;-->
+<!--                {% for message in conversation_log %}-->
+<!--                {% if message.role == 'user' %}-->
+<!--                <div class="chat-message user-message">-->
+<!--                    <p><strong>我:</strong> {{ message.content }}</p>-->
+<!--                </div>-->
+<!--                {% elif message.role == 'assistant' %}-->
+<!--                <div class="chat-message assistant-message">-->
+<!--                    <p><strong>智连云途:</strong> {{ message.content }}</p>-->
+<!--                </div>-->
+<!--                {% endif %}-->
+<!--                {% endfor %}-->
+<!--            </div>-->
+
+<!--            <form action="/" method="post">-->
+<!--                <input type="text" name="user_input" placeholder="请输入您的问题..." required>-->
+<!--                <button type="submit">发送</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; 右侧背景部分 &ndash;&gt;-->
+<!--    <div id="right-section">-->
+<!--    <h2>关于智连云途</h2>-->
+<!--    <p>智连云途是一款智能查询系统，旨在通过自然语言处理技术，为用户提供高效、便捷的智能服务。我们致力于打造一个可以轻松回答您各类问题的智能助手，助您在复杂信息中快速找到答案。</p>-->
+<!--    <img src="stat/tech_background.png" alt="科技背景" style="width:100%; height:auto;">-->
+<!--    </div>-->
+
+
+<!--</body>-->
+
+<!--</html>-->
+
+
+
+
+
+
